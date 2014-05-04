@@ -17,6 +17,7 @@ LinkedList.prototype.addToHead = function(data) {
 		this.head = node;
 		this.head.next = temp;
 	}
+	
 	this.size += 1;
 }
 
