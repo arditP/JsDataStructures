@@ -5,13 +5,16 @@ var Node = function(data) {
 
 var LinkedList = function() {
 	this.head = null;
+	this.tail = null;
 	this.size = 0;
 }
 
 LinkedList.prototype.addToHead = function(data) {
 	var node = new Node(data);
-	if(this.head === null)
+	if(this.head === null) {
 		this.head = node;
+		this.tail = node;
+	}
 	else {
 		var temp = this.head;
 		this.head = node;
@@ -23,13 +26,13 @@ LinkedList.prototype.addToHead = function(data) {
 
 LinkedList.prototype.addToTail = function(data) {
 	var node = new Node(data);
-	if(this.head === null)
+	if(this.head === null) {
 		this.head = node;
-	else {
-		var current = this.head;
-		while(current.next !== null)
-			current = current.next;
-		current.next = node;
+		this.tail = node;
+	} else {
+		var temp = this.tail;
+		temp.next = node;
+		this.tail = node;
 	}
 	this.size += 1;	
 }
@@ -46,6 +49,8 @@ LinkedList.prototype.removeFromHead = function() {
 		var current = this.head;
 		this.head = current.next;
 		data = current.data;
+		if(current.next === null)
+			this.tail = null;
 		delete current;
 		this.size -= 1;
 		return data;
@@ -61,10 +66,11 @@ LinkedList.prototype.removeFromTail = function() {
 			prev = current;
 			current = current.next;
 		}
-		if(prev !== null)
+		if(prev !== null) 
 			prev.next = null;
 		else
 			this.head = null;
+		this.tail = prev;
 		var data = current.data;
 		delete current;
 		this.size -= 1;
@@ -86,6 +92,7 @@ LinkedList.prototype.remove = function(data) {
 			// if the element is at the head
 			if(prev === null) {
 				this.head = current.next;
+				this.tail = prev;
 				delete current;
 			} else if(current.next !== null) {
 				// if the element is in the middle
@@ -94,6 +101,7 @@ LinkedList.prototype.remove = function(data) {
 			} else {
 				// the element is at the end of the 
 				prev.next = null;
+				this.tail = prev;
 				delete current;
 			}
 			this.size -= 1;
@@ -129,10 +137,7 @@ LinkedList.prototype.getHead = function() {
 }
 
 LinkedList.prototype.getTail = function() {
-	var current = this.head;
-	while(current !== null && current.next !== null)
-		current = current.next;
-	return current;
+	return this.tail;
 }
 
 LinkedList.prototype.iterator = function() {
