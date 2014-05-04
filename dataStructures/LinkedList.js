@@ -104,15 +104,19 @@ LinkedList.prototype.remove = function(data) {
 	}
 }
 
-LinkedList.prototype.print = function() {
+LinkedList.prototype.toString = function() {
 	var current = this.head;
 	var data = '[';
-	while(current !== null) {
-		//console.log("Value: %j" , current.data);
-		data += (current.next !== null) ? (JSON.stringify(current.data) + ', ') : (JSON.stringify(current.data) + ']');
+	while(current !== null) {		
+		data += (current.next !== null) ? (JSON.stringify(current.data) + ', ') : (JSON.stringify(current.data));
 		current = current.next;
 	}
-	console.log(data);
+	data += ']';
+	return data;
+}
+
+LinkedList.prototype.print = function() {
+	console.log(this.toString());
 }
 
 LinkedList.prototype.length = function() {
